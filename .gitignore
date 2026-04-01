@@ -32,5 +32,8 @@ Thumbs.db
 packages/
 *.nupkg
 
-# Windows shortcuts (optional, since you have .lnk files)
-# *.lnk
+# Windows shortcuts
+*.lnk
+
+# Command files
+*.cmd

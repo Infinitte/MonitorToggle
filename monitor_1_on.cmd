@@ -1,1 +1,0 @@
-uvx monitorcontrol --set-power-mode on --monitor 1

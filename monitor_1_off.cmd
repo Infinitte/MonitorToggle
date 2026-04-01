@@ -1,1 +1,0 @@
-uvx monitorcontrol --set-power-mode off_soft --monitor 1

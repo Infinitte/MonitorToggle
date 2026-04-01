@@ -1,60 +1,60 @@
 # Monitor Toggle Tray
 
-Una aplicación de bandeja del sistema para Windows 11 que permite alternar el encendido y apagado del monitor 1 usando los scripts existentes.
+A system tray application for Windows 11 that allows toggling monitor 1 on and off using existing scripts.
 
-## Ejecutables Simples (Paso a Paso)
+## Simple Executables (Step by Step)
 
-Antes de la aplicación completa, creé ejecutables simples para probar:
+Before the full application, I created simple executables for testing:
 
-- **MonitorOffSimple.exe**: Apaga el monitor 1.
-- **MonitorOnSimple.exe**: Enciende el monitor 1.
-- **MonitorToggleSimple.exe**: Alterna entre encendido y apagado del monitor 1 (usa un archivo `monitor_state.txt` para recordar el estado).
+- **MonitorOffSimple.exe**: Turns off monitor 1.
+- **MonitorOnSimple.exe**: Turns on monitor 1.
+- **MonitorToggleSimple.exe**: Toggles between on and off for monitor 1 (uses a `monitor_state.txt` file to remember the state).
 
-Estos están en las carpetas respectivas `\bin\Release\net8.0\win-x64\publish\`.
+These are in the respective folders `\bin\Release\net8.0\win-x64\publish\`.
 
-Ejecútalos para verificar que funcionan. El toggle recuerda el estado entre ejecuciones.
+Run them to verify they work. The toggle remembers the state between executions.
 
-## Aplicación Completa
+## Full Application
 
-La aplicación de bandeja está en `MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe`.
+The tray application is in `MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe`.
 
-### Características
+### Features
 
-- Icono en el área de notificaciones (bandeja del sistema) con icono tipo información
-- Menú contextual para encender/apagar/toggle monitores 1 y 2
-- Atajos de teclado globales: Ctrl+Alt+F1 para toggle monitor 1, Ctrl+Alt+F2 para toggle monitor 2
-- Se ejecuta en segundo plano sin ventana visible
+- Icon in the notification area (system tray) with an information-type icon
+- Context menu to turn on/off/toggle monitors 1 and 2
+- Global keyboard shortcuts: Ctrl+Alt+F1 to toggle monitor 1, Ctrl+Alt+F2 to toggle monitor 2
+- Runs in the background without a visible window
 
-### Instalación
+### Installation
 
-1. Asegúrate de que `uvx` esté disponible en el PATH (para monitorcontrol).
-2. Ejecuta `MonitorToggleTray.exe`.
-3. El icono aparecerá en la bandeja del sistema.
+1. Ensure `uvx` is available in the PATH (for monitorcontrol).
+2. Run `MonitorToggleTray.exe`.
+3. The icon will appear in the system tray.
 
-### Uso
+### Usage
 
-- **Desde el icono de la bandeja:** Haz clic derecho en el icono y selecciona las opciones para monitor 1 o 2.
-- **Atajos de teclado:** 
+- **From the tray icon:** Right-click the icon and select options for monitor 1 or 2.
+- **Keyboard shortcuts:**
   - Ctrl+Alt+F1: Toggle monitor 1
   - Ctrl+Alt+F2: Toggle monitor 2
-- **Salir:** Haz clic derecho en el icono y selecciona "Exit".
+- **Exit:** Right-click the icon and select "Exit".
 
-### Personalización
+### Customization
 
-- Para cambiar los atajos de teclado, modifica las líneas RegisterHotKey en Form1.cs.
-- Para cambiar el icono, reemplaza SystemIcons.Information con un icono personalizado (agrega un archivo .ico al proyecto y usa Icon = new Icon("path")).
-- Para agregar más monitores, copia los métodos y registra más hotkeys.
+- To change keyboard shortcuts, modify the RegisterHotKey lines in Form1.cs.
+- To change the icon, replace SystemIcons.Information with a custom icon (add a .ico file to the project and use Icon = new Icon("path")).
+- To add more monitors, copy the methods and register more hotkeys.
 
-### Requisitos
+### Requirements
 
 - Windows 11
-- .NET 8.0 (incluido en la publicación self-contained)
-- uvx y monitorcontrol instalados
+- .NET 8.0 (included in the self-contained publish)
+- uvx and monitorcontrol installed
 
-### Compilación
+### Compilation
 
-Si deseas modificar el código:
+If you want to modify the code:
 
-1. Instala .NET 8.0 SDK
-2. Ejecuta `dotnet build` en la carpeta del proyecto
-3. Para publicar: `dotnet publish -c Release -r win-x64 --self-contained`
+1. Install .NET 8.0 SDK
+2. Run `dotnet build` in the project folder
+3. To publish: `dotnet publish -c Release -r win-x64 --self-contained`

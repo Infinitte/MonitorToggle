@@ -5,9 +5,9 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace MonitorToggleTray;
-
-public partial class Form1 : Form
+namespace MonitorToggleTray
+{
+    public partial class Form1 : Form
 {
     private NotifyIcon notifyIcon;
     private ContextMenuStrip contextMenu;
@@ -280,4 +280,5 @@ public partial class Form1 : Form
         notifyIcon.Dispose();
         base.OnFormClosing(e);
     }
+}
 }

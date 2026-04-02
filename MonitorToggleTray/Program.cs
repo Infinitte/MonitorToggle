@@ -1,40 +1,20 @@
 using System;
 using System.Threading;
+using System.Windows.Forms;
 
-namespace MonitorToggleTray;
-
-static class Program
+namespace MonitorToggleTray
 {
-    private static Mutex? instanceMutex;
-
-    /// <summary>
-    ///  The main entry point for the application.
-    /// </summary>
-    [STAThread]
-    static void Main()
+    static class Program
     {
-        // Ensure only one instance of the application runs
-        const string mutexName = "MonitorToggleTray_SingleInstance";
-        instanceMutex = new Mutex(true, mutexName, out bool isNewInstance);
-
-        if (!isNewInstance)
+        /// <summary>
+        ///  The main entry point for the application.
+        /// </summary>
+        [STAThread]
+        static void Main()
         {
-            MessageBox.Show("MonitorToggleTray is already running.", "Already Running", 
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
-            return;
-        }
-
-        try
-        {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
-        finally
-        {
-            instanceMutex?.ReleaseMutex();
-            instanceMutex?.Dispose();
-        }
-    }    
+    }
 }

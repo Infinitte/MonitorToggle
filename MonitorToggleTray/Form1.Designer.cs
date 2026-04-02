@@ -1,7 +1,7 @@
-﻿namespace MonitorToggleTray;
-
-partial class Form1
+﻿namespace MonitorToggleTray
 {
+    partial class Form1
+    {
     /// <summary>
     ///  Required designer variable.
     /// </summary>
@@ -35,4 +35,5 @@ partial class Form1
     }
 
     #endregion
+}
 }

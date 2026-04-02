@@ -19,15 +19,14 @@ Uninstallable=yes
 UninstallDisplayIcon={app}\MonitorToggleTray.exe
 CompressionThreads=2
 AppCopyright=© 2026
-; Use the icon embedded in the exe, so no separate ICO path is required
-SetupIconFile=MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe
+; No SetupIconFile configured (use default Inno icon)
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MonitorToggleTray\bin\Release\net48\win-x64\publish\MonitorToggleTray.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "MonitorToggleTray\bin\Release\net48\win-x64\publish\monitor.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; Si dependes de otros dlls, añade one por linea. El self-contained incluye casi todo.
 ; Excluir .cmd/.lnk: no los referenciamos.
 
@@ -58,8 +57,12 @@ begin
   if CurStep = ssDone then
   begin
     if IsTaskSelected('autostart') then
-      RegWriteStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'MonitorToggleTray', '"' + ExpandConstant('{app}\MonitorToggleTray.exe') + '"')
+    begin
+      RegWriteStringValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'MonitorToggleTray', '"' + ExpandConstant('{app}\MonitorToggleTray.exe') + '"');
+    end
     else
-      RegDeleteKeyValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'MonitorToggleTray');
+    begin
+      RegDeleteValue(HKCU, 'Software\Microsoft\Windows\CurrentVersion\Run', 'MonitorToggleTray');
+    end;
   end;
-end
+end;

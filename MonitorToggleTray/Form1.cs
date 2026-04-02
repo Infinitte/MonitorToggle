@@ -1,6 +1,6 @@
 using System;
 using System.Diagnostics;
-using System.IO;
+using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -50,18 +50,7 @@ public partial class Form1 : Form
     private void SetupTrayIcon()
     {
         notifyIcon = new NotifyIcon();
-        
-        // Load custom icon from project folder
-        string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "monitor.ico");
-        if (File.Exists(iconPath))
-        {
-            notifyIcon.Icon = new Icon(iconPath);
-        }
-        else
-        {
-            notifyIcon.Icon = SystemIcons.Information; // Fallback if icon not found
-        }
-        
+        notifyIcon.Icon = CreateMonitorIcon();
         notifyIcon.Text = "Monitor Toggle";
         
         contextMenu = new ContextMenuStrip();
@@ -116,6 +105,84 @@ public partial class Form1 : Form
             TurnOffMonitor(monitor);
         else
             TurnOnMonitor(monitor);
+    }
+
+    private Icon CreateMonitorIcon()
+    {
+        // Create a 256x256 bitmap
+        Bitmap bitmap = new Bitmap(256, 256);
+        using (Graphics g = Graphics.FromImage(bitmap))
+        {
+            g.Clear(Color.Transparent);
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+            // Draw monitor screen (rounded rectangle)
+            int screenX = 40;
+            int screenY = 30;
+            int screenWidth = 175;
+            int screenHeight = 130;
+
+            // Draw left side (blue)
+            Rectangle leftRect = new Rectangle(screenX, screenY, screenWidth / 2, screenHeight);
+            using (Brush blueBrush = new SolidBrush(Color.FromArgb(52, 168, 224)))
+            {
+                g.FillRectangle(blueBrush, leftRect);
+            }
+
+            // Draw right side (dark gray)
+            Rectangle rightRect = new Rectangle(screenX + screenWidth / 2, screenY, screenWidth / 2, screenHeight);
+            using (Brush grayBrush = new SolidBrush(Color.FromArgb(64, 64, 64)))
+            {
+                g.FillRectangle(grayBrush, rightRect);
+            }
+
+            // Draw border (black rounded outline)
+            using (Pen borderPen = new Pen(Color.Black, 3))
+            {
+                g.DrawRectangle(borderPen, screenX, screenY, screenWidth, screenHeight);
+            }
+
+            // Draw diagonal line from top-left to bottom-right
+            using (Pen linePen = new Pen(Color.Black, 4))
+            {
+                g.DrawLine(linePen, screenX + screenWidth / 2, screenY, screenX + screenWidth, screenY + screenHeight);
+            }
+
+            // Draw power symbol in the center
+            int centerX = screenX + screenWidth / 2;
+            int centerY = screenY + screenHeight / 2;
+            int powerSize = 30;
+
+            // Draw power circle
+            using (Pen powerPen = new Pen(Color.Black, 3))
+            {
+                g.DrawArc(powerPen, centerX - powerSize, centerY - powerSize, powerSize * 2, powerSize * 2, 
+                    -45, 270);
+            }
+
+            // Draw power line (vertical)
+            using (Pen powerPen = new Pen(Color.Black, 3))
+            {
+                g.DrawLine(powerPen, centerX, centerY - powerSize - 10, centerX, centerY - powerSize);
+            }
+
+            // Draw monitor stand
+            int standX = screenX + screenWidth / 2 - 20;
+            int standY = screenY + screenHeight + 5;
+            using (Brush standBrush = new SolidBrush(Color.Black))
+            {
+                // Vertical stand
+                g.FillRectangle(standBrush, standX + 5, standY, 30, 25);
+                // Base
+                g.FillRectangle(standBrush, standX - 15, standY + 25, 80, 8);
+            }
+        }
+
+        // Convert bitmap to icon
+        IntPtr hIcon = bitmap.GetHicon();
+        Icon icon = Icon.FromHandle(hIcon);
+        bitmap.Dispose();
+        return icon;
     }
 
     private void RunCommand(string args)

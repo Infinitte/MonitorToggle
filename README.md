@@ -47,7 +47,7 @@ Before the full application, simple executables were created for testing:
 - **MonitorOnSimple.exe**: Turns on monitor 1.
 - **MonitorToggleSimple.exe**: Toggles between on and off for monitor 1 (uses a `monitor_state.txt` file to remember the state).
 
-These are in the respective folders `\bin\Release\net48\win-x64\publish\`.
+These are in the respective folders `\bin\Release\net48\win-x64\publish\` or available as separate downloads in the [releases](https://github.com/Infinitte/MonitorToggle/releases).
 
 Run them to verify they work. The toggle remembers the state between executions.
 

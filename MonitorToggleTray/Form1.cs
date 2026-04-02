@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -49,7 +50,18 @@ public partial class Form1 : Form
     private void SetupTrayIcon()
     {
         notifyIcon = new NotifyIcon();
-        notifyIcon.Icon = SystemIcons.Information;
+        
+        // Load custom icon from project folder
+        string iconPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "monitor.ico");
+        if (File.Exists(iconPath))
+        {
+            notifyIcon.Icon = new Icon(iconPath);
+        }
+        else
+        {
+            notifyIcon.Icon = SystemIcons.Information; // Fallback if icon not found
+        }
+        
         notifyIcon.Text = "Monitor Toggle";
         
         contextMenu = new ContextMenuStrip();

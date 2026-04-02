@@ -19,7 +19,8 @@ Uninstallable=yes
 UninstallDisplayIcon={app}\MonitorToggleTray.exe
 CompressionThreads=2
 AppCopyright=© 2026
-SetupIconFile=monitor.ico
+; Use the icon embedded in the exe, so no separate ICO path is required
+SetupIconFile=MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -27,7 +28,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 [Files]
 Source: "MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "MonitorToggleTray\monitor.ico"; DestDir: "{app}"; Flags: ignoreversion
 ; Si dependes de otros dlls, añade one por linea. El self-contained incluye casi todo.
 ; Excluir .cmd/.lnk: no los referenciamos.
 

@@ -51,14 +51,6 @@ These are available as separate downloads in the [releases](https://github.com/I
 
 Run them to verify they work. The toggle remembers the state between executions.
 
-## Customization
-
-- To change keyboard shortcuts, modify the RegisterHotKey lines in Form1.cs.
-- To change the icon, modify the CreateMonitorIcon method.
-- To add more monitors, copy the methods and register more hotkeys.
-- .NET 8.0 (included in the self-contained publish)
-- uvx and monitorcontrol installed
-
 ### Compilation
 
 If you want to modify the code:

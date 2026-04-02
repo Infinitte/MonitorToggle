@@ -1,37 +1,32 @@
 # Monitor Toggle Tray
 
-A system tray application for Windows 11 that allows toggling monitor 1 on and off using existing scripts.
+A system tray application for Windows 11 that allows toggling monitors on and off.
 
-## Simple Executables (Step by Step)
+## Installation
 
-Before the full application, I created simple executables for testing:
+### Using the Installer (Recommended)
 
-- **MonitorOffSimple.exe**: Turns off monitor 1.
-- **MonitorOnSimple.exe**: Turns on monitor 1.
-- **MonitorToggleSimple.exe**: Toggles between on and off for monitor 1 (uses a `monitor_state.txt` file to remember the state).
+1. Download `MonitorToggleTraySetup.exe` from the [latest release](https://github.com/Infinitte/MonitorToggle/releases).
+2. Run the installer and follow the setup wizard.
+3. The application will be installed and can be launched from the Start menu or desktop shortcut.
+4. Optionally, enable autostart during installation.
 
-These are in the respective folders `\bin\Release\net8.0\win-x64\publish\`.
-
-Run them to verify they work. The toggle remembers the state between executions.
-
-## Full Application
-
-The tray application is in `MonitorToggleTray\bin\Release\net8.0-windows\win-x64\publish\MonitorToggleTray.exe`.
-
-### Features
-
-- Icon in the notification area (system tray) with an information-type icon
-- Context menu to turn on/off/toggle monitors 1 and 2
-- Global keyboard shortcuts: Ctrl+Alt+F1 to toggle monitor 1, Ctrl+Alt+F2 to toggle monitor 2
-- Runs in the background without a visible window
-
-### Installation
+### Manual Installation
 
 1. Ensure `uvx` is available in the PATH (for monitorcontrol).
-2. Run `MonitorToggleTray.exe`.
-3. The icon will appear in the system tray.
+2. Copy the files from `MonitorToggleTray\bin\Release\net48\win-x64\publish\` to a folder.
+3. Run `MonitorToggleTray.exe`.
 
-### Usage
+## Features
+
+- Icon in the notification area (system tray) with a custom monitor icon
+- Context menu to turn on/off/toggle monitors 1 and 2
+- Global keyboard shortcuts: Ctrl+Alt+F1 to toggle monitor 1, Ctrl+Alt+F2 to toggle monitor 2
+- Single instance protection
+- State persistence between sessions
+- Runs in the background without a visible window
+
+## Usage
 
 - **From the tray icon:** Right-click the icon and select options for monitor 1 or 2.
 - **Keyboard shortcuts:**
@@ -39,15 +34,28 @@ The tray application is in `MonitorToggleTray\bin\Release\net8.0-windows\win-x64
   - Ctrl+Alt+F2: Toggle monitor 2
 - **Exit:** Right-click the icon and select "Exit".
 
-### Customization
+## Requirements
+
+- Windows 11 (with .NET Framework 4.8 pre-installed)
+- `uvx` in PATH for monitor control functionality
+
+## Simple Executables (For Testing)
+
+Before the full application, simple executables were created for testing:
+
+- **MonitorOffSimple.exe**: Turns off monitor 1.
+- **MonitorOnSimple.exe**: Turns on monitor 1.
+- **MonitorToggleSimple.exe**: Toggles between on and off for monitor 1 (uses a `monitor_state.txt` file to remember the state).
+
+These are in the respective folders `\bin\Release\net48\win-x64\publish\`.
+
+Run them to verify they work. The toggle remembers the state between executions.
+
+## Customization
 
 - To change keyboard shortcuts, modify the RegisterHotKey lines in Form1.cs.
-- To change the icon, replace SystemIcons.Information with a custom icon (add a .ico file to the project and use Icon = new Icon("path")).
+- To change the icon, modify the CreateMonitorIcon method.
 - To add more monitors, copy the methods and register more hotkeys.
-
-### Requirements
-
-- Windows 11
 - .NET 8.0 (included in the self-contained publish)
 - uvx and monitorcontrol installed
 

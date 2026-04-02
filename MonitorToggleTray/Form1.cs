@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -27,6 +28,7 @@ public partial class Form1 : Form
     {
         InitializeComponent();
         DetectMonitors();
+        LoadMonitorStates();
         SetupTrayIcon();
         RegisterHotKeys();
     }
@@ -36,6 +38,57 @@ public partial class Form1 : Form
         // Detect connected monitors (using Screen.AllScreens as reference)
         monitorCount = Math.Min(Screen.AllScreens.Length, 4);
         if (monitorCount == 0) monitorCount = 1; // At least 1 monitor assumed
+    }
+
+    private void LoadMonitorStates()
+    {
+        // Load saved states from file
+        string stateFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "monitor_states.txt");
+        if (File.Exists(stateFile))
+        {
+            try
+            {
+                string[] lines = File.ReadAllLines(stateFile);
+                for (int i = 0; i < lines.Length && i < 4; i++)
+                {
+                    if (bool.TryParse(lines[i].Trim(), out bool state))
+                    {
+                        monitorStates[i] = state;
+                    }
+                }
+            }
+            catch
+            {
+                // If file reading fails, assume all monitors are on
+                for (int i = 0; i < 4; i++)
+                    monitorStates[i] = true;
+            }
+        }
+        else
+        {
+            // If no state file exists, assume all monitors are on
+            for (int i = 0; i < 4; i++)
+                monitorStates[i] = true;
+        }
+    }
+
+    private void SaveMonitorStates()
+    {
+        // Save current states to file
+        try
+        {
+            string stateFile = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "monitor_states.txt");
+            string[] lines = new string[4];
+            for (int i = 0; i < 4; i++)
+            {
+                lines[i] = monitorStates[i].ToString();
+            }
+            File.WriteAllLines(stateFile, lines);
+        }
+        catch
+        {
+            // Silently fail if save doesn't work
+        }
     }
 
     private void RegisterHotKeys()
@@ -91,12 +144,14 @@ public partial class Form1 : Form
     {
         RunCommand($"monitorcontrol --set-power-mode on --monitor {monitor}");
         monitorStates[monitor - 1] = true;
+        SaveMonitorStates();
     }
 
     private void TurnOffMonitor(int monitor)
     {
         RunCommand($"monitorcontrol --set-power-mode off_soft --monitor {monitor}");
         monitorStates[monitor - 1] = false;
+        SaveMonitorStates();
     }
 
     private void ToggleMonitor(int monitor)

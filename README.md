@@ -37,7 +37,7 @@ A system tray application for Windows 11 that allows toggling monitors on and of
 ## Requirements
 
 - Windows 11 (with .NET Framework 4.8 pre-installed)
-- `uvx` in PATH for monitor control functionality
+- `uvx` in PATH for monitor control functionality ([installation instructions](https://docs.astral.sh/uv/getting-started/installation/))
 
 ## Simple Executables (For Testing)
 
